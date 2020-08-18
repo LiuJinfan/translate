@@ -80,7 +80,7 @@ def translation(language_key, language_value, path):
       if(path == target_path_ios):
         result = result+'"'+origin[i]+'"='+'"'+target[i]+'";\n'
       elif(path == target_path_android):
-        result = result+origin[i]+' = '+target[i]+'\n'
+        result = result+origin[i]+'='+target[i]+'\n'
     target_file = open(path+language_key+'.txt', 'w+')
     target_file.write(result)
     print(language_key+':完成')
@@ -123,13 +123,12 @@ class myThread (threading.Thread):
         self.path = path
 
     def run(self):
-        print ("开始线程：" + self.name)
-        print('***************',choose)
+        # print ("开始线程：" + self.name)
         if(choose==2):
           tranlate_web(self.value, self.path)
         else:
           translation(self.key, self.value, self.path)
-        print ("退出线程：" + self.name)
+        # print ("退出线程：" + self.name)
 
 
 def trans():
