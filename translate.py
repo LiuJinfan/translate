@@ -1,7 +1,6 @@
 from googletrans import Translator
 from time import sleep
 import os as os
-from progress.bar import ShadyBar
 from random import random
 import threading
 import json
@@ -9,10 +8,13 @@ from pick import pick
 
 origin_name = 'a.txt'  # 源文件名称
 origin_path = './'+origin_name  # 源文件地址
-target_path_ios = './iOS/'  # 生成文件目录
+target_path_ios = './iOS/'  # 生成文件的目录
 target_path_android = './安卓/'
 target_path_web = './web/'
+target_path_defult = './翻译结果/'
 choose = None
+
+#目标语言字典，可自行添加修改，格式'语言名':'简写代码'
 language = {
 '印尼语': 'id',
 '意大利语': 'it',
@@ -28,9 +30,10 @@ language = {
 '法语': 'fr'
 }
 title = '\n将要翻译的文本命名为'+origin_name +'与该程序保存在同一目录下(web直接选择即可），然后选择要输出的平台:'
-options = ['iOS', 'Android', 'Web']
+options = ['预设', 'iOS', 'Android', 'Web']
 option, choose = pick(options, title)
 
+#用于对谷歌发动混淆攻击的数组（误）😈
 random_language_list = ['fa', 'ar', 'de', 'fr', 'pt']
 random_text_list = ['落叶的一生只是为了归根吗', 'What a wonderful day! ',
     'Domani andrà meglio', '长路漫漫，唯剑作伴', '飞湍瀑流争喧豗,砯崖转石万壑雷']
@@ -60,7 +63,6 @@ def translation(language_key, language_value, path):
     result = ''
     origin = []
     target = []
-    # bar = ShadyBar('\n总进度', max=len(lines))
     for line in lines:
       origin_str = line.split('\n')[0]
       target_str = request(line.split('\n')[0], language_value, translator)
@@ -77,10 +79,13 @@ def translation(language_key, language_value, path):
       origin.append(origin_str)
       target.append(target_str)
     for i in range(len(origin)):
+    #输出格式规则：
       if(path == target_path_ios):
         result = result+'"'+origin[i]+'"='+'"'+target[i]+'";\n'
       elif(path == target_path_android):
         result = result+origin[i]+'='+target[i]+'\n'
+      elif(path == target_path_defult):
+        result = result+origin[i]+' = '+target[i]+'\n'
     target_file = open(path+language_key+'.txt', 'w+')
     target_file.write(result)
     print(language_key+':完成')
@@ -132,18 +137,20 @@ class myThread (threading.Thread):
 
 
 def trans():
-  if not os.path.exists(origin_path) and choose in (0, 1):
+  if not os.path.exists(origin_path) and choose in (0, 1, 3):
     print('error:找不到源文件，请检查文件名是否正确')
     return
   if not os.path.exists('./target.json') and choose == 2:
     print('error:找不到源文件，请检查文件名是否正确')
     return
-  if choose == 0:
+  if choose == 1:
     path = target_path_ios
-  elif choose == 1:
-    path = target_path_android
   elif choose == 2:
+    path = target_path_android
+  elif choose == 3:
     path = target_path_web
+  elif choose == 0:
+    path = target_path_defult
   if not os.path.exists(path):
     os.makedirs(path)
   print('翻译中...')
