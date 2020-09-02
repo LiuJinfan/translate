@@ -11,7 +11,8 @@
  该工具会逐行读取原文本进行翻译并逐行输出，翻译后的结果存放在按目标语言命名的对应的txt文件中
 
 
-### 国内使用googletrans超时的问题： 
+
+#### 国内使用googletrans超时的问题： 
 只需修改源码，把py_translator中的
  gtoken.py
  urls.py
