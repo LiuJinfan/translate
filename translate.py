@@ -129,7 +129,7 @@ class myThread (threading.Thread):
 
     def run(self):
         # print ("开始线程：" + self.name)
-        if(choose==2):
+        if(choose==3):
           tranlate_web(self.value, self.path)
         else:
           translation(self.key, self.value, self.path)
@@ -137,10 +137,10 @@ class myThread (threading.Thread):
 
 
 def trans():
-  if not os.path.exists(origin_path) and choose in (0, 1, 3):
+  if not os.path.exists(origin_path) and choose in (0, 1, 2):
     print('error:找不到源文件，请检查文件名是否正确')
     return
-  if not os.path.exists('./target.json') and choose == 2:
+  if not os.path.exists('./target.json') and choose == 3:
     print('error:找不到源文件，请检查文件名是否正确')
     return
   if choose == 1:
