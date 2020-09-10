@@ -8,7 +8,7 @@
 所需运行库：
  <br/>googletrans
  <br/>pick
- <br/>已附在requirements.txt中，可使用 pip install -r packages.txt 命令批量安装
+ <br/>已附在requirements.txt中，可使用 pip install -r requirements.txt 命令批量安装
 
 
 #### 国内使用googletrans超时的问题： 

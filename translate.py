@@ -57,7 +57,7 @@ def getrandom():
 
 def translation(language_key, language_value, path):
     translator = Translator()
-    file = open(origin_path)
+    file = open(origin_path, 'r', encoding='utf-8')
     lines = file.readlines()
     file.close()
     result = ''
@@ -94,7 +94,7 @@ def translation(language_key, language_value, path):
 
 def tranlate_web(language_value, path):
     translator = Translator()
-    file = open('./target.json')
+    file = open('./target.json', 'r', encoding='utf-8')
     json_str=file.read()
     json_obj=json.loads(json_str)
     target_obj={}
